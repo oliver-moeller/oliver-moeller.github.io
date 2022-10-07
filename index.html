@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Weather</title>
+
+    <meta charset="UTF-8" />
+    <meta name="description" content="DWD Weather" />
+    <meta name="author" content="oliver-moeller" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="application-name" content="Weather" />
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+    <link rel="manifest" href="/favicon/site.webmanifest" />
+    <link rel="mask-icon" href="/favicon/safari-pinned-tab.svg" color="#2288ee" />
+    <meta name="msapplication-TileColor" content="#2288ee" />
+    <meta name="theme-color" content="#2288ee" />
+
+    <link rel="stylesheet" href="/dist/main.css" />
+
+    <script src="/src/theme.js"></script>
+
+    <script src="/src/location.js" defer></script>
+    <script src="/src/search.js" defer></script>
+    <script src="/src/weather.js" defer></script>
+  </head>
+
+  <body class="bg-primary text-primary">
+    <div id="root">
+      <div id="main-container" class="max-w-screen-lg p-2 mx-auto">
+        <div
+          id="top-bar"
+          class="flex items-center px-5 py-2 mx-1 mt-2 mb-4 space-x-2 text-lg rounded-full shadow-md bg-tertiary hover:highlight">
+          <input
+            id="search-box"
+            type="search"
+            placeholder="Search city..."
+            class="w-full py-0 text-lg font-bold border-0 text-primary placeholder:text-dim placeholder:font-normal bg-inherit focus:outline-0"
+            hidden />
+          <div id="location-display" class="w-full space-x-1">
+            <strong id="location-name"></strong>
+            <span id="coordinates" class="text-dim"></span>
+          </div>
+          <div id="theme-select" class="right-0 flex p-1 space-x-2 rounded-full text-dim hover:bg-secondary group">
+            <button
+              id="theme-auto"
+              class="transition-all can-hover:hidden material-symbols-outlined hover:scale-110 hover:text-primary group-hover:inline">
+              contrast
+            </button>
+            <button
+              id="theme-dark"
+              class="transition-all can-hover:hidden material-symbols-outlined hover:scale-110 hover:text-primary group-hover:inline">
+              dark_mode
+            </button>
+            <button
+              id="theme-light"
+              class="transition-all can-hover:hidden material-symbols-outlined hover:scale-110 hover:text-primary group-hover:inline">
+              light_mode
+            </button>
+          </div>
+        </div>
+        <div id="weather">
+          <div id="weather-data"></div>
+          <div id="timestamp" class="px-1 py-2 text-right text-dim"></div>
+
+          <template id="template-day">
+            <div>
+              <details class="my-2 overflow-hidden rounded-lg shadow-md bg-tertiary hover:highlight">
+                <summary class="p-2 text-lg transition-shadow cursor-default">
+                  <span class="summary-text"></span>
+                </summary>
+                <div class="m-2 mt-0 space-y-2">
+                  <table class="w-full text-center rounded-lg bg-secondary hours"></table>
+                </div>
+              </details>
+            </div>
+          </template>
+
+          <template id="template-now">
+            <table class="w-full text-center rounded-lg bg-secondary now">
+              <td>
+                <div>
+                  <strong><span class="text-xl time"></span></strong>
+                </div>
+                <div>
+                  <span
+                    class="text-transparent material-symbols-outlined bg-clip-text bg-gradient-to-br from-orange-500 to-indigo-600 text-7xl icon"></span>
+                </div>
+              </td>
+              <td>
+                <table class="w-full">
+                  <td>
+                    <span
+                      class="text-transparent material-symbols-outlined bg-clip-text bg-gradient-to-br from-red-800 to-orange-200">
+                      thermometer
+                    </span>
+                    <span class="temperature"></span>
+                    <sup>°C</sup>
+                  </td>
+                  <td>
+                    <span
+                      class="text-transparent material-symbols-outlined bg-clip-text bg-gradient-to-br from-sky-600 to-white">
+                      water_drop
+                    </span>
+                    <span class="precipitation"></span>
+                    <sup>mm/h</sup>
+                  </td>
+                  <td>
+                    <span class="text-lg wind-direction material-symbols-outlined">south</span>
+                    <span class="wind-speed"></span>
+                    <sup>km/h</sup>
+                  </td>
+                </table>
+                <table class="w-full">
+                  <td>
+                    <span class="text-lg material-symbols-outlined">humidity_mid</span>
+                    <span class="humidity"></span>
+                    <sup>%</sup>
+                  </td>
+                  <td>
+                    <span class="text-lg material-symbols-outlined">compress</span>
+                    <span class="pressure"></span>
+                    <sup>hPa</sup>
+                  </td>
+                  <td>
+                    <span class="text-lg material-symbols-outlined">sunny</span>
+                    <span class="sunshine"></span>
+                    <sup>min</sup>
+                  </td>
+                  <td>
+                    <span class="text-lg material-symbols-outlined">cloudy</span>
+                    <span class="cloud-cover"></span>
+                    <sup>%</sup>
+                  </td>
+                </table>
+              </td>
+            </table>
+          </template>
+
+          <template id="template-hour">
+            <tr>
+              <td><span class="time"></span></td>
+              <td>
+                <span
+                  class="text-transparent material-symbols-outlined bg-clip-text bg-gradient-to-br from-orange-500 to-indigo-600 icon"></span>
+              </td>
+              <td>
+                <span
+                  class="text-transparent material-symbols-outlined bg-clip-text bg-gradient-to-br from-red-800 to-orange-200">
+                  thermometer
+                </span>
+                <span class="temperature"></span>
+                <sup>°C</sup>
+              </td>
+              <td>
+                <span
+                  class="text-transparent material-symbols-outlined bg-clip-text bg-gradient-to-br from-sky-600 to-white">
+                  water_drop
+                </span>
+                <span class="precipitation"></span>
+                <sup>mm/h</sup>
+              </td>
+              <td>
+                <span class="text-lg wind-direction material-symbols-outlined">south</span>
+                <span class="wind-speed"></span>
+                <sup>km/h</sup>
+              </td>
+            </tr>
+          </template>
+        </div>
+        <div id="search" hidden>
+          <ul class="overflow-hidden rounded-lg shadow-md bg-tertiary">
+            <button
+              id="search-item-current-location"
+              class="flex items-center w-full p-3 space-x-2 cursor-default enabled:hover:highlight location-name disabled:text-dim">
+              <span class="material-symbols-outlined">my_location</span>
+              <span>Current Location</span>
+            </button>
+            <div id="search-list-items"></div>
+          </ul>
+          <template id="template-search-item">
+            <button class="block w-full p-3 text-left location-name hover:highlight"></button>
+          </template>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

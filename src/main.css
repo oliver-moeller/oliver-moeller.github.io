@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans");
+@import url("https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@media screen(lg) {
+  body {
+    margin-left: calc(100vw - 100%); /* prevent scrollbar moving content */
+  }
+}
+
+@layer base {
+  body {
+    font-family: "Open Sans";
+  }
+
+  /* theme */
+  :root {
+    --bg-primary: 240 240 240;
+    --bg-secondary: 232 233 235;
+    --bg-tertiary: 220 222 224;
+
+    --text-primary: 60 60 60;
+    --text-dim: 140 140 140;
+  }
+  .dark {
+    --bg-primary: 40 41 45;
+    --bg-secondary: 44 45 50;
+    --bg-tertiary: 50 52 57;
+
+    --text-primary: 240 240 240;
+    --text-dim: 120 120 120;
+  }
+
+  button {
+    @apply cursor-default; /* revert cursor change for button according to accessibility guidelines */
+  }
+
+  /* table tr td {
+    @apply py-2 px-2;
+  } */
+  table {
+    @apply border-separate border-spacing-2;
+  }
+
+  /* replacement for details marker */
+  details summary {
+    list-style-type: "expand_more";
+  }
+  details[open] summary {
+    list-style-type: "expand_less";
+  }
+  details summary::marker {
+    font-family: "Material Symbols Outlined";
+  }
+}
+
+@layer components {
+  .material-symbols-outlined {
+    /* font-size: inherit; */
+    vertical-align: inherit;
+  }
+}
+
+@layer utilities {
+  .darken {
+    box-shadow: inset 0 0 1000px 1000px rgba(0, 0, 0, 0.1);
+  }
+  .lighten {
+    box-shadow: inset 0 0 1000px 1000px rgba(255, 255, 255, 0.1);
+  }
+  .highlight {
+    @apply darken dark:lighten;
+  }
+
+  .animate-gradient-slide {
+    background-size: 500% 500%;
+    background-image: repeating-linear-gradient(
+      100deg,
+      transparent,
+      transparent 20%,
+      rgba(255, 255, 255, 0.2),
+      transparent 40%,
+      transparent,
+      transparent 60%,
+      rgba(255, 255, 255, 0.2),
+      transparent 80%,
+      transparent
+    );
+    animation: gradient-slide normal 1.5s infinite;
+  }
+}
+
+@keyframes gradient-slide {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
