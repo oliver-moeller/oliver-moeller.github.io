@@ -68,6 +68,9 @@ async function displayWeatherData(weatherData) {
   let lastDate = "";
   let dayNode = {};
   let first = true;
+  let percentage = 0;
+  const colorTemperature = "rgba(200, 50, 50, 0.2)";
+  const colorPrecipitation = "rgba(50, 100, 200, 0.2)";
 
   weatherData.weather.forEach(hour => {
     date = dateFormat.format(new Date(hour.timestamp));
@@ -95,11 +98,24 @@ async function displayWeatherData(weatherData) {
       let e = dayNode.querySelector("details > div ");
       e.insertBefore(hourNode, e.firstChild);
     } else {
+      //TODO: dynamic min and max values for temperature and precipitation
+      percentage = clamp((hour.temperature / 30) * 100, 0, 100);
+      hourNode.querySelector(
+        "td.temperature-cell"
+      ).style.background = `linear-gradient(to right, ${colorTemperature} 0%, ${colorTemperature} ${percentage}%, rgba(0, 0, 0, 0) ${percentage}%, rgba(0, 0, 0, 0) 100%)`;
+      percentage = clamp((hour.precipitation / 8) * 100, 0, 100);
+      hourNode.querySelector(
+        "td.precipitation-cell"
+      ).style.background = `linear-gradient(to right, ${colorPrecipitation} 0%, ${colorPrecipitation} ${percentage}%, rgba(0, 0, 0, 0) ${percentage}%, rgba(0, 0, 0, 0) 100%)`;
       dayNode.querySelector("details > div > .hours").appendChild(hourNode);
     }
   });
 
   weatherNode.querySelector("details").setAttribute("open", "");
+}
+
+function clamp(num, min, max) {
+  return Math.min(Math.max(num, min), max);
 }
 
 function formatNumber(value, decimals) {

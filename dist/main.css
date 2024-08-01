@@ -815,6 +815,10 @@ details summary::marker {
   vertical-align: inherit;
 }
 
+.fixed{
+  position: fixed;
+}
+
 .right-0{
   right: 0px;
 }
@@ -1101,11 +1105,6 @@ details summary::marker {
   line-height: 1;
 }
 
-.text-base{
-  font-size: 1rem;
-  line-height: 1.5rem;
-}
-
 .font-bold{
   font-weight: 700;
 }
@@ -1122,10 +1121,6 @@ details summary::marker {
 
 .text-transparent{
   color: transparent;
-}
-
-.text-inherit{
-  color: inherit;
 }
 
 .shadow-md{
@@ -1266,18 +1261,6 @@ details summary::marker {
   outline-width: 0px;
 }
 
-.focus\:highlight:focus {
-  box-shadow: inset 0 0 1000px 1000px rgba(0, 0, 0, 0.1);
-}
-
-.dark .focus\:highlight:focus {
-  box-shadow: inset 0 0 1000px 1000px rgba(255, 255, 255, 0.1);
-}
-
-.enabled\:cursor-default:enabled{
-  cursor: default;
-}
-
 .enabled\:hover\:highlight:hover:enabled {
   box-shadow: inset 0 0 1000px 1000px rgba(0, 0, 0, 0.1);
 }
@@ -1286,22 +1269,9 @@ details summary::marker {
   box-shadow: inset 0 0 1000px 1000px rgba(255, 255, 255, 0.1);
 }
 
-.disabled\:cursor-not-allowed:disabled{
-  cursor: not-allowed;
-}
-
-.disabled\:cursor-default:disabled{
-  cursor: default;
-}
-
 .disabled\:text-dim:disabled{
   --tw-text-opacity: 1;
   color: rgb(var(--text-dim) / var(--tw-text-opacity));
-}
-
-.disabled\:text-red-500:disabled{
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity));
 }
 
 .group:hover .group-hover\:inline{
